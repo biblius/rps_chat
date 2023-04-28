@@ -2,12 +2,13 @@
   /** @type {any} */
   export let icon = undefined;
 
-  /** @type {string} */
   export let tooltip = "";
 
-  let hide = tooltip === "";
+  export let route = "";
 
   export let color = "#166534D9";
+
+  let hide = tooltip === "";
 
   function mouseOver() {
     color = "#FFF";
@@ -17,12 +18,13 @@
   }
 </script>
 
-<div
+<a
   on:mouseover={mouseOver}
   on:focus={mouseOver}
   on:mouseleave={mouseOut}
-  class="relative flex items-center justify-center w-10 h-10 mx-auto my-2
-  bg-gray-800 rounded-3xl transition-all cursor-pointer
+  href={route}
+  class="relative flex items-center justify-center w-10 h-10 mx-auto my-4
+  bg-gray-900 rounded-3xl transition-all cursor-pointer
   hover:bg-green-800 hover:opacity-90 hover:rounded-xl
   group"
 >
@@ -39,4 +41,4 @@
       {tooltip}
     </span>
   {/if}
-</div>
+</a>

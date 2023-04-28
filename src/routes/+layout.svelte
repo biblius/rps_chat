@@ -1,33 +1,27 @@
 <script>
   import "../app.postcss";
-  import Header from "../components/Header.svelte";
-  import Sidebar from "../components/Sidebar.svelte";
+  import Sidebar from "../components/Sidebar/Sidebar.svelte";
   import "./styles.css";
+  import { fade } from "svelte/transition";
+  import Settings from "../components/Settings.svelte";
+
+  let showSettings = false;
+
+  const handleExpand = () => {
+    showSettings = !showSettings;
+  };
 </script>
 
-<div class="app">
-  <Sidebar />
+<div class="flex overflow-hidden">
+  <Sidebar on:expandSidebar={handleExpand} />
 
-  <main>
-    <slot />
-  </main>
+  {#if showSettings}
+    <div class="h-screen w-screen flex" transition:fade={{ duration: 100 }}>
+      <Settings />
+    </div>
+  {:else}
+    <main transition:fade={{ duration: 100 }} class="h-screen w-screen flex">
+      <slot />
+    </main>
+  {/if}
 </div>
-
-<style>
-  .app {
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-  }
-
-  main {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    padding: 1rem;
-    width: 100%;
-    max-width: 64rem;
-    margin: 0 auto;
-    box-sizing: border-box;
-  }
-</style>
