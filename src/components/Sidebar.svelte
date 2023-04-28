@@ -3,35 +3,32 @@
   import Penta from "./icons/Pentagram.svelte";
   import Plus from "./icons/Plus.svelte";
   import HoF from "./icons/HallOfFame.svelte";
-  import { onMount, onDestroy } from "svelte";
+  import Expand from "./icons/Expand.svelte";
+  import { fade, fly } from "svelte/transition";
 
-  /**
-   * @type {string}
-   */
-  let left = "-left-12";
+  let expand = false;
 
-  /**
-   * @param {{ clientX: number; }} event
-   */
-  function show(event) {
-    if (event.clientX < 300) {
-      left = "left-0";
-    }
-    if (event.clientX >= 300) {
-      left = "-left-12";
-    }
-  }
-
-  onMount(() => {
-    document.addEventListener("mousemove", show);
-  });
+  const handleExpand = () => {
+    expand = !expand;
+  };
 </script>
 
 <div
-  class="fixed h-screen {left} items-start m-0
-  justify-start flex flex-col bg-gray-800 transition-all shadow-lg"
+  class="fixed h-screen w-12 justify-between flex flex-col bg-gray-800 transition-all shadow-lg z-10"
 >
-  <Icon icon={Penta} tooltip="Go home" />
-  <Icon icon={Plus} tooltip="Add friendo" />
-  <Icon icon={HoF} tooltip="Hall of champions" />
+  <div>
+    <Icon icon={Penta} tooltip="Go home" />
+    <Icon icon={Plus} tooltip="Add friendo" />
+    <Icon icon={HoF} tooltip="Hall of champions" />
+  </div>
+  <button class="self-center justify-self-end" on:click={handleExpand}>
+    <Icon icon={Expand} />
+  </button>
 </div>
+
+{#if expand}
+  <div
+    transition:fly={{ x: -44, duration: 500 }}
+    class="fixed h-screen left-12 w-44 flex flex-col bg-gray-900 transition-all shadow-lg z-0"
+  />
+{/if}
